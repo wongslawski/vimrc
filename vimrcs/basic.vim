@@ -380,3 +380,41 @@ function! VisualSelection(direction, extra_filter) range
     let @/ = l:pattern
     let @" = l:saved_reg
 endfunction
+
+autocmd BufNewFile *.py exec ":call SetTitlePy()"
+
+"加入注释
+func SetCommentPy()
+    call setline(1,"\# -*- coding: utf-8 -*-")
+    call append(line("."),   "\#===============================================================")
+    call append(line(".")+1,   "\#   Copyright (xxx) ".strftime("%Y")." All rights reserved.")
+    call append(line(".")+2, "\#   ")
+    call append(line(".")+3, "\#   @filename: ".expand("%:t"))
+    call append(line(".")+4, "\#   @author: xxx@xxx.com")
+    call append(line(".")+5, "\#   @date: ".strftime("%Y/%m/%d/ %H:%M:%S"))
+    call append(line(".")+6, "\#   @brief: ")
+    call append(line(".")+7, "\#")
+    call append(line(".")+8, "\#   @history: ")
+    call append(line(".")+9, "\#")
+    call append(line(".")+10, "\#================================================================")
+endfunc
+
+func SetTitlePy()
+    call SetCommentPy()
+    if expand("%:e") == 'py'
+        call append(line(".")+11, "")
+        call append(line(".")+12, "import sys")
+        call append(line(".")+13, "import json")
+        call append(line(".")+14, "import os")
+        call append(line(".")+15, "")
+        call append(line(".")+16, "reload(sys)")
+        call append(line(".")+17, "sys.setdefaultencoding( \"utf-8\" )")
+        call append(line(".")+18, "sys.path.append(os.getcwd())")
+        call append(line(".")+19, "")
+        call append(line(".")+20, "")
+        call append(line(".")+21, "")
+        call append(line(".")+22, "\# python ".expand("%:t"))
+        call append(line(".")+23, "if __name__ == \"__main__\":")
+        call append(line(".")+24, "\tpass")
+    endif
+endfunc
